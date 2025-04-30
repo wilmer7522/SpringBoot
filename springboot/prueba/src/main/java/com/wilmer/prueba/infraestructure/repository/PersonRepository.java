@@ -1,4 +1,4 @@
-package com.wilmer.prueba.repository;
+package com.wilmer.prueba.infraestructure.repository;
 
 import java.util.List;
 
