@@ -2,15 +2,19 @@ package com.wilmer.prueba.aplication.service;
 
 import java.util.List;
 
-import com.wilmer.prueba.domain.Person;
-import com.wilmer.prueba.domain.Rol;
+import com.wilmer.prueba.domain.dto.PersonRequest;
+import com.wilmer.prueba.domain.dto.PersonResponse;
+
 
 
 
 public interface PersonService {
 
-    public List<Person> findAllByFilter(String filter, String value);
-    public List<Rol> findAllRolesByFilter(String filter, String Value);
+    public List<PersonResponse> findAllByFilter(String filter, String value);
+    public PersonResponse patchPerson(long id, PersonRequest personDto);
+    public PersonResponse createNewUser(PersonRequest personDto);
+    
+    
 
 }
 

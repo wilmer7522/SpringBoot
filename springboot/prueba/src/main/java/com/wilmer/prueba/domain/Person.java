@@ -2,16 +2,27 @@ package com.wilmer.prueba.domain;
 
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,8 +43,22 @@ public class Person {
 
     @ManyToOne
     @JoinColumn(name = "rol_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference // marcar el lado que no se serializa
     private Rol role;
+
+
+    @OneToOne(mappedBy = "person", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private Passport passport;
+
+    @ManyToMany
+    @JoinTable(name = "personas_project",
+    joinColumns = @JoinColumn(name = "persona_id", foreignKey = @ForeignKey(name = "fk_persona_id_projects")),
+    inverseJoinColumns = @JoinColumn(name = "project_id")
+    )
+    @JsonBackReference
+    private List<Project> projects = new ArrayList<>();
 
     public Person(){}
 

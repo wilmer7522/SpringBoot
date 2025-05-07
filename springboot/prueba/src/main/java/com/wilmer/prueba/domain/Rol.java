@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -25,7 +26,7 @@ public class Rol {
     private long id;
     private String name;
 
-    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)//Indica que e bidireccional
+    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)//Indica que e bidireccional
     @JsonManagedReference // marcar el lado que si se serializa
     private List<Person> persons = new ArrayList<>();
 
